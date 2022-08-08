@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Simulator</string>
+    <string name="Txtsimulator">Botao de simulaçao de partidas</string>
+    <string name="imagemholanda">Imagem time visitante</string>
+    <string name="imagemsenegal">Imagem time da casa</string>
+    <string name="TimeDaCasa">Time da casa</string>
+    <string name="versus">X</string>
 </resources>

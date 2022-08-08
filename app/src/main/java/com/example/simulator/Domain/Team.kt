@@ -1,4 +1,7 @@
-package com.example.simulator
+package com.example.simulator.Domain
 
-class Team {
-}
+data class Team(
+    val name: String,
+    val stars: Int,
+    val image: String,
+)
