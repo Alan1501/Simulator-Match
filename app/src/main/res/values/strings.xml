@@ -5,4 +5,5 @@
     <string name="imagemsenegal">Imagem time da casa</string>
     <string name="TimeDaCasa">Time da casa</string>
     <string name="versus">X</string>
+    <string name="error_api">Error inesperado.</string>
 </resources>
