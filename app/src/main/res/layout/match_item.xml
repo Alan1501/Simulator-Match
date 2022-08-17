@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivHomeTeam"
@@ -18,8 +19,7 @@
             android:layout_marginTop="@dimen/margindefault"
             android:contentDescription="@string/imagemsenegal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/senegal" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvHomeTeamName"
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margindefault"
             android:layout_marginBottom="@dimen/margindefault"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/ivHomeTeam"
             app:layout_constraintStart_toStartOf="@+id/ivHomeTeam"
@@ -37,6 +38,7 @@
             android:id="@+id/tvHomeTeamScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toBottomOf="@+id/ivHomeTeam"
             app:layout_constraintEnd_toStartOf="@+id/tvVersus"
@@ -49,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/versus"
+
             app:layout_constraintBottom_toBottomOf="@+id/ivHomeTeam"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,14 +65,14 @@
             android:layout_marginEnd="@dimen/margindefault"
             android:contentDescription="@string/imagemholanda"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/holanda" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvAwayTeamName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margindefault"
+
             app:layout_constraintEnd_toEndOf="@+id/ivAwayTeam"
             app:layout_constraintStart_toStartOf="@+id/ivAwayTeam"
             app:layout_constraintTop_toBottomOf="@+id/ivAwayTeam"
@@ -79,6 +82,7 @@
             android:id="@+id/tvAwayTeamScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toBottomOf="@+id/ivAwayTeam"
             app:layout_constraintEnd_toStartOf="@+id/ivAwayTeam"

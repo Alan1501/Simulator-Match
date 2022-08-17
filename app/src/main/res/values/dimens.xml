@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="Team_image_size">120dp</dimen>
-    <dimen name="margindefault">16dp</dimen>
+    <dimen name="Team_image_size">100dp</dimen>
+    <dimen name="margindefault">20dp</dimen>
     <dimen name="app_bar_height">152dp</dimen>
 </resources>

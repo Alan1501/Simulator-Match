@@ -78,10 +78,16 @@ public class MainActivity extends AppCompatActivity {
             view.animate().rotationBy(360).setDuration(1000).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
+                    for (int i = 0; i < matchesAdapter.getItemCount(); i++) {
+                        Match match = matchesAdapter.getMatches().get(i);
+                        Random random = new Random();
+                        match.getHomeTeam().setScore(random.nextInt(match.getHomeTeam().getStars() + 1));
+                        match.getAwayTeam().setScore(random.nextInt(match.getAwayTeam().getStars() + 1));
+                        matchesAdapter.notifyItemChanged(i);
+               }
 
-                    //TODO implementar o algoritimo simulaçao paratidas
                 }
-            });
+            }).start();
         });
 
     }
