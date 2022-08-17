@@ -20,6 +20,7 @@ import com.example.simulator.Domain.Team;
 import com.example.simulator.R;
 import com.example.simulator.data.MatchesAPI;
 import com.example.simulator.databinding.ActivityMainBinding;
+import com.example.simulator.ui.adapter.MatchesAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private MatchesAPI MatchesAPI;
+    private MatchesAdapter matchesAdapter;
     //private MatchesAdapter matchesAdapter = new MatchesAdapter(Collections.emptyList());
 
     @Override
@@ -60,32 +62,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupMatchesList(){
-        MatchesAPI.getMatches().enqueue(new Callback<List<Match>>() {
-            @Override
-            public void onResponse(Call<List<Match>> call, Response<List<Match>> response) {
-                if(response.isSuccessful()){
-                    List<Match> matches = response.body();
-                    Log.i("Simulator", "Deu tudo certo ! partidas = " + matches.size());
-                } else {
-                    showErrorMessage();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Match>> call, Throwable t) {
-              showErrorMessage();
-            }
-        });
+        binding.rvMatches.setHasFixedSize(true);
+        binding.rvMatches.setLayoutManager(new LinearLayoutManager(this));
+        findMatchesFromApi();
     }
+
+
 
     private void setupMatchesRefresh(){
-        //TODO atualizar as partidas na açao sswipe;
+        binding.srlMatches.setOnRefreshListener(this::findMatchesFromApi);
     }
 
-    private void setupFloatingButton(){
+    private void setupFloatingButton() {
         //TODO evento clique e simulaçao de partidas;
+
     }
+     private void findMatchesFromApi() {
+        binding.srlMatches.setRefreshing(true);
+            MatchesAPI.getMatches().enqueue(new Callback<List<Match>>() {
+                @Override
+                public void onResponse(Call<List<Match>> call, Response<List<Match>> response) {
+                    if(response.isSuccessful()){
+                        List<Match> matches = response.body();
+                        Log.i("Simulator", "Deu tudo certo ! partidas = " + matches.size());
+                        matchesAdapter = new MatchesAdapter(matches);
+                        binding.rvMatches.setAdapter(matchesAdapter);
+                    } else {
+                        showErrorMessage();
+                    }
+binding.srlMatches.setRefreshing(false);
+                }
+
+                @Override
+                public void onFailure(Call<List<Match>> call, Throwable t) {
+                    showErrorMessage();
+                    binding.srlMatches.setRefreshing(false);
+                }
+            });
+        }
 
     private void showErrorMessage(){
         Snackbar.make(binding.botao, R.string.error_api, Snackbar.LENGTH_LONG).show();
