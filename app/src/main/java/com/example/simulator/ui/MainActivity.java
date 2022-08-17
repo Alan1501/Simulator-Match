@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
         setupHttpClient();
         setupMatchesList();
         setupMatchesRefresh();
-        //setupFloatingActionButton();
+        setupFloatingActionButton();
     }
 
     private void setupHttpClient() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://digitalinnovationone.github.io/matches-simulator-api/")
+                .baseUrl("https://alanandcode.github.io/matches-simulator-api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -73,8 +73,16 @@ public class MainActivity extends AppCompatActivity {
         binding.srlMatches.setOnRefreshListener(this::findMatchesFromApi);
     }
 
-    private void setupFloatingButton() {
-        //TODO evento clique e simulaçao de partidas;
+    private void setupFloatingActionButton() {
+        binding.botao.setOnClickListener(view -> {
+            view.animate().rotationBy(360).setDuration(1000).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                    //TODO implementar o algoritimo simulaçao paratidas
+                }
+            });
+        });
 
     }
      private void findMatchesFromApi() {
