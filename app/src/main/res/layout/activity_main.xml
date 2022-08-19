@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="setupFloatingButt"
     tools:context=".ui.MainActivity">
     <!--Swipe Refresh Layout -->
 
@@ -35,7 +34,6 @@
         android:clickable="true"
         android:contentDescription="@string/imagemholanda"
         android:focusable="true"
-        android:onClick="set"
         android:src="@drawable/ic_baseline_casino_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     //private MatchesAdapter matchesAdapter = new MatchesAdapter(Collections.emptyList());
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setupHttpClient();
         setupMatchesList();
         setupMatchesRefresh();
-        setupFloatingActionButton();
+        setupFloatActionButton();
     }
 
     private void setupHttpClient() {
@@ -61,21 +61,9 @@ public class MainActivity extends AppCompatActivity {
         MatchesAPI = retrofit.create(MatchesAPI.class);
     }
 
-    private void setupMatchesList(){
-        binding.rvMatches.setHasFixedSize(true);
-        binding.rvMatches.setLayoutManager(new LinearLayoutManager(this));
-        findMatchesFromApi();
-    }
-
-
-
-    private void setupMatchesRefresh(){
-        binding.srlMatches.setOnRefreshListener(this::findMatchesFromApi);
-    }
-
-    private void setupFloatingActionButton() {
+    private void setupFloatActionButton() {
         binding.botao.setOnClickListener(view -> {
-            view.animate().rotationBy(360).setDuration(1000).setListener(new AnimatorListenerAdapter() {
+            view.animate().rotationBy(360).setDuration(500).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     for (int i = 0; i < matchesAdapter.getItemCount(); i++) {
@@ -84,39 +72,46 @@ public class MainActivity extends AppCompatActivity {
                         match.getHomeTeam().setScore(random.nextInt(match.getHomeTeam().getStars() + 1));
                         match.getAwayTeam().setScore(random.nextInt(match.getAwayTeam().getStars() + 1));
                         matchesAdapter.notifyItemChanged(i);
-               }
-
+                    }
                 }
             }).start();
         });
-
     }
-     private void findMatchesFromApi() {
+
+    private void setupMatchesList() {
+        binding.rvMatches.setHasFixedSize(true);
+        binding.rvMatches.setLayoutManager(new LinearLayoutManager(this));
+        findMatchesFromApi();
+    }
+
+    private void setupMatchesRefresh() {
+        binding.srlMatches.setOnRefreshListener(this::findMatchesFromApi);
+    }
+
+    private void findMatchesFromApi() {
         binding.srlMatches.setRefreshing(true);
-            MatchesAPI.getMatches().enqueue(new Callback<List<Match>>() {
-                @Override
-                public void onResponse(Call<List<Match>> call, Response<List<Match>> response) {
-                    if(response.isSuccessful()){
-                        List<Match> matches = response.body();
-                        Log.i("Simulator", "Deu tudo certo ! partidas = " + matches.size());
-                        matchesAdapter = new MatchesAdapter(matches);
-                        binding.rvMatches.setAdapter(matchesAdapter);
-                    } else {
-                        showErrorMessage();
-                    }
-binding.srlMatches.setRefreshing(false);
-                }
-
-                @Override
-                public void onFailure(Call<List<Match>> call, Throwable t) {
+        MatchesAPI.getMatches().enqueue(new Callback<List<Match>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Match>> call, @NonNull Response<List<Match>> response) {
+                if (response.isSuccessful()) {
+                    matchesAdapter = new MatchesAdapter(response.body());
+                    binding.rvMatches.setAdapter(matchesAdapter);
+                } else {
                     showErrorMessage();
-                    binding.srlMatches.setRefreshing(false);
                 }
-            });
-        }
+                binding.srlMatches.setRefreshing(false);
+            }
 
-    private void showErrorMessage(){
-        Snackbar.make(binding.botao, R.string.error_api, Snackbar.LENGTH_LONG).show();
+            @Override
+            public void onFailure(@NonNull Call<List<Match>> call, @NonNull Throwable t) {
+                showErrorMessage();
+                binding.srlMatches.setRefreshing(false);
+            }
 
+        });
+    }
+
+    private void showErrorMessage() {
+        Snackbar.make(binding.rvMatches, R.string.error_api, Snackbar.LENGTH_SHORT).show();
     }
 }

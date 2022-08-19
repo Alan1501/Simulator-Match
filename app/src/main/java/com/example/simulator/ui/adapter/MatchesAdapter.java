@@ -17,7 +17,8 @@ import com.example.simulator.ui.DetailActivity;
 import java.util.List;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHolder> {
-    private List<Match> matches;
+
+    private final List<Match> matches;
 
     public MatchesAdapter(List<Match> matches) {
         this.matches = matches;
@@ -29,30 +30,30 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        MatchItemBinding binding = MatchItemBinding.inflate(layoutInflater, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        MatchItemBinding binding = MatchItemBinding.inflate(layoutInflater, viewGroup, false);
         return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewholder, int position) {
-    Context context = viewholder.itemView.getContext();
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        Context context = viewHolder.itemView.getContext();
         Match match = matches.get(position);
-//adapta os dados da partida ( recuperada da API) PARA O nosso layout
-        Glide.with(context).load(match.getHomeTeam().getImage()).into(viewholder.binding.ivHomeTeam);
-        viewholder.binding.tvHomeTeamName.setText(match.getHomeTeam().getName());
-    if(match.getHomeTeam().getScore() != null) {
-        viewholder.binding.tvHomeTeamScore.setText(String.valueOf(match.getHomeTeam().getScore()));
+
+        Glide.with(context).load(match.getHomeTeam().getImage()).into(viewHolder.binding.ivHomeTeam);
+        viewHolder.binding.tvHomeTeamName.setText(match.getHomeTeam().getName());
+        if (match.getHomeTeam().getScore() != null) {
+            viewHolder.binding.tvHomeTeamScore.setText(String.valueOf(match.getHomeTeam().getScore()));
         }
 
-        Glide.with(context).load(match.getAwayTeam().getImage()).into(viewholder.binding.ivAwayTeam);
-        viewholder.binding.tvAwayTeamName.setText(match.getAwayTeam().getName());
-        if(match.getAwayTeam().getScore() != null) {
-            viewholder.binding.tvAwayTeamScore.setText(String.valueOf(match.getAwayTeam().getScore()));
+        Glide.with(context).load(match.getAwayTeam().getImage()).into(viewHolder.binding.ivAwayTeam);
+        viewHolder.binding.tvAwayTeamName.setText(match.getAwayTeam().getName());
+        if (match.getAwayTeam().getScore() != null) {
+            viewHolder.binding.tvAwayTeamScore.setText(String.valueOf(match.getAwayTeam().getScore()));
         }
 
-        viewholder.itemView.setOnClickListener(view -> {
+        viewHolder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra(DetailActivity.Extras.MATCH, match);
             context.startActivity(intent);
@@ -61,7 +62,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return matches.size();
+        return this.matches.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

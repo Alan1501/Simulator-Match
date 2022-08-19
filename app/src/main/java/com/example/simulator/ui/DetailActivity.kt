@@ -19,16 +19,12 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         intent?.extras?.let {
             val match = it.getParcelable(Extras.MATCH) as Match?
             if (match != null) {
-                Glide.with(this).load(match.place.image).into(binding.ivPlace)
-                supportActionBar?.title = match.place.name
 
-                binding.tvDescription.text = match.description
 
                 Glide.with(this).load(match.homeTeam.image).into(binding.ivHomeTeam)
                 binding.tvHomeTeamName.text = match.homeTeam.name
