@@ -4,14 +4,10 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-
 @Parcelize
-data class Team (
+data class Place (
     @SerializedName("nome")
     val name: String,
-    @SerializedName("estrelas")
-    val stars: Int,
     @SerializedName("imagem")
-    val image: String,
-    var score: Int?
+    val image: String
 ) : Parcelable
